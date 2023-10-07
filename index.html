@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moon Visualization</title>
+    <style>
+        body { margin: 0; }
+        canvas { display: block; }
+    </style>
+</head>
+<body>
+<script type="module" src="script.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+<div id="infoBox" style="position: absolute; display: none; background: white; padding: 8px; border: 1px solid black;"></div>
+<div id="moonquakeDetails" style="position: fixed; right: 10px; top: 10px; background-color: rgba(255, 255, 255, 0.8); padding: 10px; border-radius: 5px; max-width: 200px; display: none;">
+    <h4>Moonquake Details</h4>
+    <p id="quakeDetails"></p>
+</div>
+</body>
+</html>
