@@ -19,18 +19,41 @@ function init() {
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
 
-    // Add stars
+    const starSphereRadius = 50; // Adjust this value as needed. Make sure it's larger than other objects in your scene.
+    const starSphereGeometry = new THREE.SphereGeometry(starSphereRadius, 64, 64);
+
+    const starsMaterial = new THREE.PointsMaterial({ color: 0xFFFFFF, size: 0.22 }); // Adjust the size as needed
+
+    const starsVertices = [];
+
     for (let i = 0; i < 1000; i++) {
-        const starGeometry = new THREE.SphereGeometry(0.005, 24, 24);
-        const starMaterial = new THREE.MeshBasicMaterial({ color: 0xFFFFFF });
-        const star = new THREE.Mesh(starGeometry, starMaterial);
+        const theta = 2 * Math.PI * Math.random();
+        const phi = Math.acos(2 * Math.random() - 1);
 
-        star.position.x = (Math.random() - 0.5) * 10;
-        star.position.y = (Math.random() - 0.5) * 10;
-        star.position.z = (Math.random() - 0.5) * 10;
+        const x = starSphereRadius * Math.sin(phi) * Math.cos(theta);
+        const y = starSphereRadius * Math.sin(phi) * Math.sin(theta);
+        const z = starSphereRadius * Math.cos(phi);
 
-        scene.add(star);
+        starsVertices.push(x, y, z);
     }
+
+    const starsGeometry = new THREE.BufferGeometry().setAttribute('position', new THREE.Float32BufferAttribute(starsVertices, 3));
+    const starSphere = new THREE.Points(starsGeometry, starsMaterial);
+
+    scene.add(starSphere);
+
+    // // Add stars
+    // for (let i = 0; i < 1000; i++) {
+    //     const starGeometry = new THREE.SphereGeometry(0.005, 24, 24);
+    //     const starMaterial = new THREE.MeshBasicMaterial({ color: 0xFFFFFF });
+    //     const star = new THREE.Mesh(starGeometry, starMaterial);
+    //
+    //     star.position.x = (Math.random() - 0.5) * 10;
+    //     star.position.y = (Math.random() - 0.5) * 10;
+    //     star.position.z = (Math.random() - 0.5) * 10;
+    //
+    //     scene.add(star);
+    // }
 
     // Moon
     const geometry = new THREE.SphereGeometry(1, 32, 32);
@@ -96,6 +119,8 @@ function onMouseClick(event) {
         // Show and animate the corresponding ring sprite
         if (!intersects[0].object.userData.isRing) {
             const ringSprite = intersectedObjects.find(obj => obj.userData.isRing && obj.userData.parent === intersects[0].object);
+            console.log("Detected Ring Sprite:", ringSprite); // Add this line
+
             if (ringSprite) {
                 ringSprite.material.opacity = 0.8;  // Set to visible
                 ringSprite.scale.set(0.05, 0.05, 0.05);  // Reset scale
@@ -130,7 +155,7 @@ function processData(data) {
         const z = radius * Math.sin(phi) * Math.sin(theta);
 
         const loader = new THREE.TextureLoader();
-        const ringTexture = loader.load('ring.webp');
+        const ringTexture = loader.load('ring2.png');
         const circleTexture = loader.load('circle.webp');
 
         const spriteMaterial = new THREE.SpriteMaterial({
@@ -156,6 +181,7 @@ function processData(data) {
         ringSprite.scale.set(0.05, 0.05, 0.05);
         ringSprite.userData = { isRing: true, parent: sprite };
         scene.add(ringSprite);
+        intersectedObjects.push(ringSprite);
     });
 }
 
