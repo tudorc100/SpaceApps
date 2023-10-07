@@ -71,7 +71,6 @@ function init() {
 function onMouseClick(event) {
     event.preventDefault();
 
-
     mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
     mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
 
@@ -94,16 +93,28 @@ function onMouseClick(event) {
             Source: ${intersects[0].object.userData.Source}
         `;
 
-        // Simple scale animation for the quake
-        gsap.to(intersects[0].object.scale, {
-            x: 1.5,
-            y: 1.5,
-            duration: 0.5,
-            yoyo: true,
-            ease: "power2.out"
-        });
+        // Show and animate the corresponding ring sprite
+        if (!intersects[0].object.userData.isRing) {
+            const ringSprite = intersectedObjects.find(obj => obj.userData.isRing && obj.userData.parent === intersects[0].object);
+            if (ringSprite) {
+                ringSprite.material.opacity = 0.8;  // Set to visible
+                ringSprite.scale.set(0.05, 0.05, 0.05);  // Reset scale
+
+                // Start the animation
+                gsap.to(ringSprite.scale, {
+                    x: 0.1,  // Adjust as needed
+                    y: 0.1,
+                    duration: 1,
+                    ease: 'power1.out',
+                    onComplete: () => {
+                        ringSprite.material.opacity = 0;  // Hide after animation
+                    }
+                });
+            }
+        }
     }
 }
+
 
 function processData(data) {
     data.forEach(entry => {
@@ -120,6 +131,7 @@ function processData(data) {
 
         const loader = new THREE.TextureLoader();
         const ringTexture = loader.load('ring.webp');
+        const circleTexture = loader.load('circle.webp');
 
         const spriteMaterial = new THREE.SpriteMaterial({
             color: Type === "Artifical Impacts" ? 0xff0000 : 0x00ff00,
