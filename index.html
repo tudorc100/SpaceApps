@@ -1,21 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Moon Visualization</title>
+    <link rel="icon" type="image/x-icon" href="moon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
     <style>
-        body { margin: 0; }
-        canvas { display: block; }
+        *{
+            font-family: "Roboto", sans-serif;
+        }
+        body {
+            margin: 0;
+        }
+        canvas {
+            display: block;
+        }
+        #moonquakeDetails {
+            position: fixed;
+            right: -400px;  /* Start outside of the screen */
+            top: 10px;
+            background-color: #424242;  /* Material Design card color */
+            padding: 16px;
+            border-radius: 8px;
+            width: 300px;
+            height: 66vh;  /* 66% of viewport height */
+            box-shadow: 0px 2px 4px -1px rgba(0,0,0,0.2),
+            0px 4px 5px 0px rgba(0,0,0,0.14),
+            0px 1px 10px 0px rgba(0,0,0,0.12); /* Material Design card shadow */
+            overflow-y: auto; /* Add scrollbar if content is too long */
+            transition: right 0.3s ease-out; /* Animate the right property */
+        }
+
+        h4 {
+            color: #E3F2FD; /* Light blue text color */
+        }
+
+        p {
+            color: #BBDEFB; /* Dark blue text color */
+        }
+
     </style>
 </head>
 <body>
 <script type="module" src="script.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
-<div id="infoBox" style="position: absolute; display: none; background: white; padding: 8px; border: 1px solid black;"></div>
-<div id="moonquakeDetails" style="position: fixed; right: 10px; top: 10px; background-color: rgba(255, 255, 255, 0.8); padding: 10px; border-radius: 5px; max-width: 200px; display: none;">
+<div
+        id="infoBox"
+        style="
+        position: absolute;
+        display: none;
+        background: white;
+        padding: 8px;
+        border: 1px solid black;
+      "
+></div>
+<div id="moonquakeDetails">
+    <button id="closeButton" style="position: absolute; right: 10px; top: 10px;">X</button>
     <h4>Moonquake Details</h4>
     <p id="quakeDetails"></p>
 </div>
+
+
 </body>
 </html>
