@@ -1,6 +1,4 @@
-import * as THREE from 'three';
 import Papa from 'papaparse';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 let scene, camera, renderer, moon, controls;
 const intersectedObjects = [];  // Ensure it's initialized here
@@ -41,8 +39,8 @@ function init() {
 
     // Moon Textures
     const loader = new THREE.TextureLoader();
-    moonTexture = loader.load('moonSmall.jpg');
-    heatmapTexture = loader.load('download.png');
+    moonTexture = loader.load('./moonSmall.jpg');
+    heatmapTexture = loader.load('./download.png');
 
     const geometry = new THREE.SphereGeometry(1, 32, 32);
     const material = new THREE.MeshStandardMaterial({ map: moonTexture });
@@ -183,8 +181,8 @@ function processData(data) {
         const z = radius * Math.sin(phi) * Math.sin(theta);
 
         const loader = new THREE.TextureLoader();
-        const ringTexture = loader.load('ring2.png');
-        const circleTexture = loader.load('circle.webp');
+        const ringTexture = loader.load('./ring2.png');
+        const circleTexture = loader.load('./circle.webp');
 
         const spriteMaterial = new THREE.SpriteMaterial({
             color: Type === "Artifical Impacts" ? 0xff0000 : 0x00ff00,
