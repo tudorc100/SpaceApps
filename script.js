@@ -125,8 +125,6 @@ function onMouseClick(event) {
             const detailsText = document.getElementById('quakeDetails');
             detailsText.innerHTML = `
             Date: ${intersects[0].object.userData.Date}<br>
-            // Latitude: ${intersects[0].object.userData.Lat}<br>
-            // Longitude: ${intersects[0].object.userData.Long}<br>
             Type: ${intersects[0].object.userData.Type}<br>
             Source: ${intersects[0].object.userData.Source}
         `;
